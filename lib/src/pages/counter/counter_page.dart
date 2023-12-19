@@ -27,6 +27,7 @@ class CounterPage extends ConsumerWidget {
       ),
       body: Center(
         child: counter.when(
+          skipLoadingOnRefresh: false,
           data: (count) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,

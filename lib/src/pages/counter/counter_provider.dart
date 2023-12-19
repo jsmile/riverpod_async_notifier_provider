@@ -26,7 +26,7 @@ class CounterNotifier extends AsyncNotifier<int> {
 
     try {
       await waitSecond();
-      // throw 'Fail to increment';
+      throw 'Fail to increment';
       state = AsyncData(state.value! + 1); // state.value 는 AsyncData 의 이전 value
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);

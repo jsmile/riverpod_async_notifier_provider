@@ -12,14 +12,14 @@ class CounterPage extends ConsumerWidget {
     final counter = ref.watch(counterNotiProvider);
     debugPrint(success('### counter : $counter'));
 
-    // debugPrint(
-    //   success(
-    //       '### isLoading: ${counter.isLoading}, isRefreshing: ${counter.isRefreshing}, isReloading: ${counter.isReloading}'),
-    // );
-    // debugPrint(
-    //   success(
-    //       '*** hasValue: ${counter.hasValue}, hasError: ${counter.hasError}'),
-    // );
+    debugPrint(
+      success(
+          '### isLoading: ${counter.isLoading}, isRefreshing: ${counter.isRefreshing}, isReloading: ${counter.isReloading}'),
+    );
+    debugPrint(
+      success(
+          '*** hasValue: ${counter.hasValue}, hasError: ${counter.hasError}'),
+    );
 
     return Scaffold(
       appBar: AppBar(

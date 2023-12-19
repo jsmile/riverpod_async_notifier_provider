@@ -9,7 +9,7 @@ class CounterPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final counter = ref.watch(counterNotiProvider);
+    final counter = ref.watch(counterAutoFamiAsynNotiProvider(10));
     debugPrint(success('### counter : $counter'));
 
     debugPrint(
@@ -43,14 +43,18 @@ class CounterPage extends ConsumerWidget {
                     FloatingActionButton(
                       heroTag: 'decrement',
                       onPressed: () {
-                        ref.read(counterNotiProvider.notifier).decrement();
+                        ref
+                            .read(counterAutoFamiAsynNotiProvider(10).notifier)
+                            .decrement();
                       },
                       child: const Icon(Icons.remove),
                     ),
                     FloatingActionButton(
                       heroTag: 'increment',
                       onPressed: () {
-                        ref.read(counterNotiProvider.notifier).increment();
+                        ref
+                            .read(counterAutoFamiAsynNotiProvider(10).notifier)
+                            .increment();
                       },
                       child: const Icon(Icons.add),
                     ),
@@ -70,7 +74,7 @@ class CounterPage extends ConsumerWidget {
                 const SizedBox(height: 20.0),
                 OutlinedButton(
                   onPressed: () {
-                    ref.invalidate(counterNotiProvider);
+                    ref.invalidate(counterAutoFamiAsynNotiProvider(10));
                   },
                   child: Text(
                     'Refresh',

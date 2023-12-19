@@ -5,35 +5,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../utils/ansi_color_debug.dart';
 
-class CounterNotifier extends AsyncNotifier<int> {
+class CounterAutoFamiAsynNoti extends AutoDisposeFamilyAsyncNotifier<int, int> {
+  @override
+  FutureOr<int> build(int arg) async {
+    // async 사용
+    ref.onDispose(
+      () {
+        debugPrint(info('### CounterAutoFamiAsynNoti disposed'));
+      },
+    );
+    await waitSecond();
+
+    debugPrint(info('### CounterAutoFamiAsynNoti initialized'));
+    return arg; // initial state 로 emmit 하게됨( AsyncLoading + AsyncData ).
+  }
+
+  /// build 에 async 를 사용하지 않고 FutureOr 를 사용
   // @override
-  // FutureOr<int> build() async {   // async 사용
+  // FutureOr<int> build() {
   //   ref.onDispose(
   //     () {
   //       debugPrint(info('### CounterNotifier disposed'));
   //     },
   //   );
-  //   await waitSecond();
 
   //   debugPrint(info('### CounterNotifier initialized'));
-  //   return 0; // initial state 로 emmit 하게됨( AsyncLoading + AsyncData ).
+  //   // loading state 없이 바로 data state 로 emmit 하게됨( AsyncData ).
+  //   return 0;
+  //   // // loading state 이후에 data state 로 emmit 하게됨( AsyncLoading + AsyncData ).
+  //   // return Future.value(0);
   // }
-
-  /// build 에 async 를 사용하지 않고 FutureOr 를 사용
-  @override
-  FutureOr<int> build() {
-    ref.onDispose(
-      () {
-        debugPrint(info('### CounterNotifier disposed'));
-      },
-    );
-
-    debugPrint(info('### CounterNotifier initialized'));
-    // loading state 없이 바로 data state 로 emmit 하게됨( AsyncData ).
-    return 0;
-    // // loading state 이후에 data state 로 emmit 하게됨( AsyncLoading + AsyncData ).
-    // return Future.value(0);
-  }
 
   Future<void> waitSecond() => Future.delayed(const Duration(seconds: 1));
 
@@ -73,5 +74,5 @@ class CounterNotifier extends AsyncNotifier<int> {
   }
 }
 
-final counterNotiProvider =
-    AsyncNotifierProvider<CounterNotifier, int>(CounterNotifier.new);
+final counterAutoFamiAsynNotiProvider = AsyncNotifierProvider.autoDispose
+    .family<CounterAutoFamiAsynNoti, int, int>(CounterAutoFamiAsynNoti.new);
